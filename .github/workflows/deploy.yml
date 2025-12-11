@@ -1,35 +1,26 @@
-name: Deploy to Server via SCP
-
-# main ブランチへ push (または pull_request のマージ) があったときに動く
+name: 自動デプロイ
 on:
-  push:
+  pull_request:
     branches:
       - main
+    types:
+      - closed
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository
+      - name: チェックアウト
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Prepare SSH key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          # known_hosts を無効化したくない場合はここで追加する（推奨）
-          # ssh-keyscan -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
-
-      - name: Copy files to server (scp)
-        uses: appleboy/scp-action@v0.1.7
+      - name: サーバにSSHしてgit pull
+        uses: appleboy/ssh-action@v0.1.6
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          source: "./"            # リポジトリのルートから全て送りたい場合
-          target: ${{ secrets.SSH_TARGET_DIR }}
-          strip_components: 1     # ./ を取り扱う場合に調整（必要なければ削除）
+          script: |
+            cd ${{ secrets.DEPLOY_DIR }}
+            git checkout main
+            git pull origin main
