@@ -26,13 +26,10 @@ jobs:
           password: ${{ secrets.FTP_PASS }}
 
           # GitHub 側のアップロード対象フォルダ（末尾に / をつけること）
-          local-dir: ${{ github.workspace }}/lufull-LP/
+          local-dir: ./
 
           # サーバー側のアップロード先
           server-dir: /public_html/luful-life.com/
-
-          # デプロイ時に削除されたファイルをサーバーからも削除
-          delete-remote: true
 
           # デバッグ出力を有効化
           dry-run: false
