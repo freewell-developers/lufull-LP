@@ -2,85 +2,32 @@ name: Safe Deploy via FTP
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main" ]  # main ブランチに push されたら実行
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. リポジトリをチェックアウト
+      # リポジトリをチェックアウト
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. ワークスペース構造を確認（デバッグ用）
+      # ディレクトリ構造確認
       - name: List workspace
         run: |
           echo "Workspace path: ${{ github.workspace }}"
           ls -R ${{ github.workspace }}
 
-      # 3. FTP デプロイ（安全モード）
+      # FTP デプロイ（dry-run）
       - name: FTP Deploy (dry-run)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASS }}
-
-          # アップロード対象フォルダ
           local-dir: ${{ github.workspace }}/lufull-LP/
-
-          # サーバー側アップロード先
           server-dir: /public_html/luful-life.com/
-
-          # サーバーの既存ファイルは削除せず安全にテスト
           dangerous-clean-slate: false
-
-          # 本番ではなく dry-run モードで安全確認
           dry-run: true
-
-          # ログ出力レベル
-          log-level: standard
-name: Safe Deploy via FTP
-
-on:
-  push:
-    branches: [ "main" ]
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-
-    steps:
-      # 1. リポジトリをチェックアウト
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      # 2. ワークスペース構造を確認（デバッグ用）
-      - name: List workspace
-        run: |
-          echo "Workspace path: ${{ github.workspace }}"
-          ls -R ${{ github.workspace }}
-
-      # 3. FTP デプロイ（安全モード）
-      - name: FTP Deploy (dry-run)
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-        with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USER }}
-          password: ${{ secrets.FTP_PASS }}
-
-          # アップロード対象フォルダ
-          local-dir: ${{ github.workspace }}/lufull-LP/
-
-          # サーバー側アップロード先
-          server-dir: /public_html/luful-life.com/
-
-          # サーバーの既存ファイルは削除せず安全にテスト
-          dangerous-clean-slate: false
-
-          # 本番ではなく dry-run モードで安全確認
-          dry-run: true
-
-          # ログ出力レベル
           log-level: standard
