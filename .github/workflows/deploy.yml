@@ -1,4 +1,4 @@
-name: Safe Deploy via FTP
+name: Deploy via FTP
 
 on:
   push:
@@ -9,29 +9,34 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. リポジトリ内容を取得
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: List workspace
-        run: |
-          echo "Workspace path: ${{ github.workspace }}"
-          ls -R ${{ github.workspace }}
-
-      - name: FTP Deploy (dry-run)
+      # 2. FTP デプロイ（本番）
+      - name: FTP Deploy
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASS }}
 
-          # workspace 直下のファイル・フォルダをアップロード
+          # アップロード元（リポジトリ全体）
           local-dir: ${{ github.workspace }}/
 
+          # アップロード先（お名前.com のディレクトリ）
           server-dir: /public_html/luful-life.com/
-          dangerous-clean-slate: false
-          dry-run: true
+
+          # GitHub に無いファイルもサーバーに残す（安全）
+          # 項目ごと削除 → デフォルト false
+          # dangerous-clean-slate: false
+
+          # 実際にアップロードする（本番）
+          dry-run: false
+
+          # ログは標準レベル（十分）
           log-level: standard
 
-           # .github フォルダはアップロード対象から除外
+          # 不要なフォルダは除外
           exclude: |
             .github/**
