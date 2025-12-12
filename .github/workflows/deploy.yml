@@ -25,11 +25,17 @@ jobs:
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASS }}
 
-          # GitHub 側のアップロード対象フォルダ（末尾に / をつけること）
-          local-dir: ./
+          # GitHub 側のアップロード対象フォルダ（末尾 / 必須）
+          local-dir: ${{ github.workspace }}/lufull-LP/
 
           # サーバー側のアップロード先
-          server-dir: public_html/luful-life.com/
+          server-dir: /public_html/luful-life.com/
 
-          # デバッグ出力を有効化
+          # サーバー側の既存ファイルを削除して同期したい場合
+          dangerous-clean-slate: true
+
+          # デバッグ出力
           dry-run: false
+
+          # ログレベル（必要に応じて変更可能）
+          log-level: info
