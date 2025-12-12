@@ -20,7 +20,7 @@ jobs:
           password: ${{ secrets.FTP_PASS }}    # FTPパスワード
 
           # GitHub 側のアップロード対象フォルダ
-          local-dir: ./lufull-LP
+          local-dir: ./lufull-LP/
 
           # サーバー側のアップロード先
-          server-dir: /public_html/luful-life.com
+          server-dir: /public_html/luful-life.com/
