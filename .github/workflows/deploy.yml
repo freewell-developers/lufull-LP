@@ -1,10 +1,9 @@
-name: 自動デプロイ
+name: SFTP Deploy
+
 on:
-  pull_request:
+  push:
     branches:
       - main
-    types:
-      - closed
 
 jobs:
   deploy:
@@ -13,14 +12,14 @@ jobs:
     steps:
       - name: チェックアウト
         uses: actions/checkout@v4
-      - name: サーバにSSHしてgit pull
-        uses: appleboy/ssh-action@v0.1.6
+
+      - name: SFTP Deploy
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          server: ${{ secrets.SSH_HOST }}
           port: ${{ secrets.SSH_PORT }}
-          script: |
-            cd ${{ secrets.DEPLOY_DIR }}
-            git checkout main
-            git pull origin main
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          local_path: "./"
+          remote_path: ${{ secrets.SSH_TARGET_DIR }}
+          overwrite: true
