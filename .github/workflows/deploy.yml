@@ -30,3 +30,6 @@ jobs:
           # 不要なフォルダは除外
           exclude: |
             .github/**
+            .git/**
+            .gitignore
+
