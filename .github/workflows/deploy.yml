@@ -31,3 +31,7 @@ jobs:
           dangerous-clean-slate: false
           dry-run: true
           log-level: standard
+
+           # .github フォルダはアップロード対象から除外
+          exclude: |
+            .github/**
