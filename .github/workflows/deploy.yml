@@ -35,3 +35,4 @@ jobs:
            # .github フォルダはアップロード対象から除外
           exclude: |
             .github/**
+            .git/**
