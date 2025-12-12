@@ -29,6 +29,7 @@ jobs:
 
           server-dir: public_html/luful-life.com/
           dangerous-clean-slate: false
+          force-publish: true
           dry-run: false
           log-level: standard
 
