@@ -12,15 +12,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: List files
+        run: ls -R ${{ github.workspace }}
+
       - name: FTP Deploy
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          server: ${{ secrets.FTP_HOST }}      # XXX.onamae.ne.jp
-          username: ${{ secrets.FTP_USER }}    # FTPアカウント
-          password: ${{ secrets.FTP_PASS }}    # FTPパスワード
-
-          # GitHub 側のアップロード対象フォルダ
-          local-dir: ./lufull-LP/
-
-          # サーバー側のアップロード先
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASS }}
+          local-dir: ${{ github.workspace }}/lufull-LP/
           server-dir: /public_html/luful-life.com/
