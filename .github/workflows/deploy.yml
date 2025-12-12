@@ -18,5 +18,9 @@ jobs:
           server: ${{ secrets.FTP_HOST }}      # XXX.onamae.ne.jp
           username: ${{ secrets.FTP_USER }}    # FTPアカウント
           password: ${{ secrets.FTP_PASS }}    # FTPパスワード
-          local-dir: ./
-          server-dir: /public_html/
+
+          # GitHub 側のアップロード対象フォルダ
+          local-dir: ./lufull-LP
+
+          # サーバー側のアップロード先
+          server-dir: /public_html/luful-life.com
