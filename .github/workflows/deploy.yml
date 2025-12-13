@@ -27,7 +27,7 @@ jobs:
           # workspace 直下のファイル・フォルダをアップロード
           local-dir: ${{ github.workspace }}/
 
-          server-dir: public_html/luful-life.com/
+          server-dir: /
           dangerous-clean-slate: false
           force-publish: true
           dry-run: false
