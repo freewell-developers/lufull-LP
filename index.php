@@ -2,7 +2,7 @@
 require_once 'lib/util.php';
 include 'lib/set_cookies.php';
 
-$_SESSION['from'] = Option::LP2;
+$_SESSION['from'] = Option::Lufull;
 ?>
 <!DOCTYPE html>
 <html lang="ja">

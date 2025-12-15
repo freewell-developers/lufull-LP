@@ -101,7 +101,9 @@ class EmailSending
         $headerss['MIME-Version'] = "1.0";
         $headerss['Content-Type'] = "text/plain; charset=" . $charset;
         $headerss['Content-Transfer-Encoding'] = "BASE64";
-        $headerss['From'] = mb_encode_mimeheader('みん社保') . '<' . $params['email'] . '>';
+        //$headerss['From'] = mb_encode_mimeheader('みん社保') . '<' . $params['email'] . '>';
+        $headerss['From'] = mb_encode_mimeheader('みん社保') . '<' . HOST_CC_MAIL . '>';
+        $headerss['Reply-To'] = $params['email'];
 
         //headerを作成
         foreach ($headerss as $key => $val) {

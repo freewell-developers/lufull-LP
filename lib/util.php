@@ -27,11 +27,13 @@ enum Option
 {
     case LP1;
     case LP2;
+    case Lufull;
     public function toString(): String
     {
         return match ($this) {
             Option::LP1 => "LP1",
             Option::LP2 => "LP2",
+            Option::Lufull => "Lufull",
         };
     }
 }
