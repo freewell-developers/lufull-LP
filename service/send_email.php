@@ -226,9 +226,11 @@ class EmailSending
         $inflow_source = $this->checkKintone($params);
         $inquiry_number = $this->getInquiryNumber();
         if (
-            !($this->notifyQueryReceivedToMinsyaho($inflow_source, $inquiry_number, $params)
+            !(
+                true
                 && $this->notifyQueryHandledToClient($inquiry_number, $params)
-                && $this->registerToKintone($inflow_source, $inquiry_number, $params))
+                && $this->registerToKintone($inflow_source, $inquiry_number, $params)
+            )
         ) {
             // ユーザリクエストの処理失敗しました
             // issue2 問い合わせの処理が失敗する場合の例外処理の追加
